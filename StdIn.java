@@ -305,7 +305,7 @@ public final class StdIn {
      * @throws NoSuchElementException if standard input is empty
      */
     public static String readAll() {
-        if (!scanner.hasNextLine())
+        if (!scanner.hasNextLine()) 
             return "";
 
         String result = scanner.useDelimiter(EVERYTHING_PATTERN).next();
@@ -492,6 +492,7 @@ public final class StdIn {
         String[] decapitokens = new String[tokens.length-1];
         for (int i = 0; i < tokens.length - 1; i++)
             decapitokens[i] = tokens[i+1];
+
         return decapitokens;
     }
 

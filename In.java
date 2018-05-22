@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Compilation:  javac -d . In.java
+ *  Compilation:  javac In.java
  *  Execution:    java In   (basic test --- see source for required files)
  *  Dependencies: none
  *
@@ -83,6 +83,10 @@ public final class In {
 
    /**
      * Initializes an input stream from standard input.
+     * System.in:
+     * The "standard" input stream. This stream is already open and ready to supply 
+     * input data. Typically this stream corresponds to keyboard input or another 
+     * input source specified by the host environment or user.
      */
     public In() {
         scanner = new Scanner(new BufferedInputStream(System.in), CHARSET_NAME);
@@ -306,12 +310,13 @@ public final class In {
      * @return the remainder of this input stream, as a string
      */
     public String readAll() {
-        if (!scanner.hasNextLine())
+        if (!scanner.hasNextLine()) 
             return "";
-
+            
         String result = scanner.useDelimiter(EVERYTHING_PATTERN).next();
         // not that important to reset delimeter, since now scanner is empty
         scanner.useDelimiter(WHITESPACE_PATTERN); // but let's do it anyway
+
         return result;
     }
 
@@ -576,7 +581,7 @@ public final class In {
      */
     @Deprecated
     public static int[] readInts(String filename) {
-        return new In(filename).readAllInts();
+        return (new In(filename)).readAllInts();
     }
 
    /**
@@ -589,7 +594,7 @@ public final class In {
      */
     @Deprecated
     public static double[] readDoubles(String filename) {
-        return new In(filename).readAllDoubles();
+        return (new In(filename)).readAllDoubles();
     }
 
    /**
@@ -602,7 +607,7 @@ public final class In {
      */
     @Deprecated
     public static String[] readStrings(String filename) {
-        return new In(filename).readAllStrings();
+        return (new In(filename)).readAllStrings();
     }
 
     /**
@@ -614,7 +619,7 @@ public final class In {
      */
     @Deprecated
     public static int[] readInts() {
-        return new In().readAllInts();
+        return (new In()).readAllInts();
     }
 
    /**
@@ -626,7 +631,7 @@ public final class In {
      */
     @Deprecated
     public static double[] readDoubles() {
-        return new In().readAllDoubles();
+        return (new In()).readAllDoubles();
     }
 
    /**
@@ -638,7 +643,7 @@ public final class In {
      */
     @Deprecated
     public static String[] readStrings() {
-        return new In().readAllStrings();
+        return (new In()).readAllStrings();
     }
     
    /**
