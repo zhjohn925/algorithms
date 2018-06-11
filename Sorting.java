@@ -86,19 +86,92 @@ public class Sorting
     //assert isSorted(a);
   }
   
-  //merge sort
-  public static <T extends Comparable<T>> void mergeSort(T[] a, T[] aux)
+  //Top-Down merge sort
+  public static <T extends Comparable<T>> void mergeTDSort(T[] a)
   {
-    //Allocate the space one time only
+    int N = a.length;
+    //Allocate the space one time only, but here also do unnecessary copy 
     //Do not use Arrays.copyOf() (creates new array) in the recursive 
     //loop that will cause performance penalty. 
-    
+    T[] aux = Arrays.copyOf(a, N);
     //Compile error: generic array creation 
     //T[] extra = new T[a.length];
     
-    recursive4MergeSort(a, aux, 0, a.length-1);
+    recursive4MergeSort(a, aux, 0, N-1);
     assert isSorted(a);
   }
+  
+  //Bottom-Up merge sort
+  public static <T extends Comparable<T>> void mergeBUSort(T[] a)
+  {
+    int mid, hi, N = a.length;
+    //Allocate the space one time only, but here also do unnecessary copy 
+    T[] aux = Arrays.copyOf(a, N);
+    //Compile error: generic array creation 
+    //T[] extra = new T[a.length];
+    
+    for (int size = 1; size<N; size = size+size) {
+      for (int lo=0; lo<N-size; lo+=(size+size)) {
+        mid = lo+size-1;
+        hi = Math.min(lo+size+size-1, N-1);
+        merge(a, aux, lo, mid, hi);
+      }
+    }
+    
+    assert isSorted(a);
+  }
+    
+  //Quicksort with two partitions
+  public static <T extends Comparable<T>> void quickSort(T[] a)
+  {
+    int N = a.length;
+    qsort(a, 0, N-1);
+    assert isSorted(a);
+  }
+  
+ 
+  //Quicksort with three partitions
+  public static <T extends Comparable<T>> void quickSort3(T[] a)
+  {
+    int N = a.length;
+    qsort3(a, 0, N-1);
+    assert isSorted(a);
+  }
+  
+  //for quicksort with two partitions, recursive function
+  //there is j so that  a[lo..j-1]<=a[j]<=a[j+1..hi]
+  private static <T extends Comparable<T>> void qsort(T[] a, int lo, int hi)
+  {
+    if (hi <= lo) return;    
+    int j = partition(a, lo, hi);
+    qsort(a, lo, j-1);   //sort left part
+    qsort(a, j+1, hi);   //sort right part
+  }
+  
+  
+  //improved version for quicksort with three partitions, recursive function
+  //the middle partition has the same key (v)
+  // a[lo..lt-1] < v=a[lt..gt] < a[gt+1, hi]
+  //This sort code partitions to put keys equals to the partitions element in
+  //place and thus does not have to include those keys in the subarrays for 
+  //the recursive calls.
+  private static <T extends Comparable<T>> void qsort3(T[] a, int lo, int hi)
+  {
+    if (hi <= lo) return;
+    int lt = lo, i=lo+1, gt=hi;
+    T v = a[lo];
+    while (i<=gt) {
+      int cmp = a[i].compareTo(v);
+      if      (cmp<0) exch(a, lt++, i++);
+      else if (cmp>0) exch(a, i, gt--);
+      else            i++;  //when equal, no exch 
+    }
+    // Now a[lo..lt-1] < v=a[lt..gt] < a[gt+1..hi]
+    // a[lt..gt] is not in part of recursive
+    qsort3(a, lo, lt-1);
+    qsort3(a, gt+1, hi);
+  }
+  
   
   // for merge sort:
   private static <T extends Comparable<T>> 
@@ -151,6 +224,29 @@ public class Sorting
         a[i] = aux[second_half_index++]; 
       }
     }    
+  }
+  
+  //For quicksort
+  private static <T extends Comparable<T>> int partition(T[] a, int lo, int hi)
+  {
+    int toRight = lo, toLeft = hi+1;
+    T v = a[lo];
+    while (true) {
+      //Scan to the right, find entry is larger than v
+      while (less(a[++toRight], v))   if (toRight==hi) break;
+      //Scan to the left, find entry is smaller than v
+      while (less(v, a[--toLeft]))  if (toLeft==lo) break;
+      //Stop when both are intersecting
+      if (toRight>=toLeft) break;
+      //switch the smaller to left, the larger to the right
+      exch(a, toRight, toLeft);
+    }
+    
+    //Move v into the partition point (index = toLeft), now
+    //with a[lo..toLeft-1] <= a[toLeft]<=a[toLeft+1..hi]
+    exch(a, lo, toLeft);
+   
+    return toLeft;
   }
   
 

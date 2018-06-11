@@ -3,7 +3,10 @@
  * Compilation:javac -d . SortCompare.java
  * Execution: java -cp . edu/princeton/cs/algs4/SortCompare Insertion Selection 1000 100
  *            java -cp . edu/princeton/cs/algs4/SortCompare Insertion Shell 1000 100 
- *            java -ea -cp . edu/princeton/cs/algs4/SortCompare Insertion Merge 10000 10
+ *            java -ea -cp . edu/princeton/cs/algs4/SortCompare Insertion MergeTD 10000 10
+ *            java -ea -cp . edu/princeton/cs/algs4/SortCompare Insertion Quick 10000 10
+ *            java -ea -cp . edu/princeton/cs/algs4/SortCompare MergeBU Quick 10000 10
+ *            java -ea -cp . edu/princeton/cs/algs4/SortCompare Shell Quick 100000 10
  *            add -ea option to enable assertion ie. assert isSorted(a)
  ****************************************************************************************/
 
@@ -15,9 +18,6 @@ public class SortCompare
   //return time of sorting a[] with the given algorithm
   public static double time(String algorithm, Double[] a) {
     
-    //MergeSort needs extra memory
-    Double[] aux = new Double[a.length];
-    
     Stopwatch timer = new Stopwatch();
     if (algorithm.equals("Insertion")) {
       Sorting.insertionSort(a);
@@ -25,8 +25,14 @@ public class SortCompare
       Sorting.selectionSort(a);
     } else if (algorithm.equals("Shell")) {
       Sorting.shellSort(a);
-    } else if (algorithm.equals("Merge")) {
-      Sorting.mergeSort(a, aux);      
+    } else if (algorithm.equals("MergeTD")) {
+      Sorting.mergeTDSort(a);   
+    } else if (algorithm.equals("MergeBU")) {
+      Sorting.mergeBUSort(a);   
+    } else if (algorithm.equals("Quick")) {
+      Sorting.quickSort(a); 
+    } else if (algorithm.equals("Quick3")) {
+      Sorting.quickSort3(a);                      
     }
     return timer.elapsedTime();
   }
@@ -39,6 +45,7 @@ public class SortCompare
       for (int i=0; i<N; i++) {
         a[i] = StdRandom.uniform();
       }
+      StdRandom.shuffle(a);
       total += time(algorithm, a);
     }
     return total;

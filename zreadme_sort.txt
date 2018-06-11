@@ -41,5 +41,61 @@
      produce a sorted array: that is shellsort.
      
      
+- Mergesort (Top-Down):
+  1. Combining two ordered arrays to make one larger ordered array. To sort 
+     an array, divide it into two halves, sort the two halves (recursively), 
+     and then merge the results.   
+  2. ~ NlogN  
+     
+- Mergesort (Bottom-up)
+  1. Bottom-up mergesort consists of a sequence of passes over the whole array,
+     doing sze-by-sze merges, starting with sze equal to 1 and doubling sze
+     on each pass (loop). The final subarray is of size (sze) only when the 
+     array size is an even multiple of sze (otherwise it is less than sze).
+     
+- Quicksort
+  1. is a divide-and-conquer method for sorting. It works by partitioning an array
+     into two subarrays, then sorting the subarrays independently.
+  2. Quicksort is complementary to Mergesort:
+     for Mergesort, we break the array into two subarrays to be sorted and then
+     combine the ordered subarrays to make the whole ordered array;
+     for Quicksort, we rearrange the array such that, when the two subarrays are
+     sorted, the whole array is ordered. 
+     for Mergesort, the array is divided in half; for Quicksort, the position of
+     the partition depends on the contents of the array.
+  3. In the first instance, we do the two recursive calls before working on the 
+     whole array; in the second instance, we do the two recursive calls after
+     working on the whole array.
+  4. The crux of the method is the partitioning process, which rearrages the array
+     to make the following three conditions hold:
+     - The entry a[j] is in its final place in the array, for some j.
+     - No entry in a[lo..j-1] is greater than a[j]
+     - No entry in a[j+1..hi] is less than a[j]
+     We achieve a complete sort by partitioning, then recursively applying the method.
+  5. The inner loop of quicksort (in the partitioning method) increments an index and
+     compares an array entry against a fixed value. This simplicity is one factor that
+     makes quicksort quick.  For example, mergesort and shellsort are typically slower
+     than quicksort because they also do data movement within their inner loops.
+  6. improved version for quicksort with three partitions, recursive function the 
+     middle partition has the same key (v)  
+        a[lo..lt-1] < v=a[lt..gt] < a[gt+1, hi]
+     This sort code partitions to put keys equals to the partitions element in place 
+     and thus does not have to include those keys in the subarrays for the recursive 
+     calls. It is good for the amount of keys are same in the data 
+  7. Cutoff to insertion sort: (another improvement)
+     - Quicksort is slower than insertion sort for tiny subarrays
+     - Replace the statement 
+      if (hi <= lo) return;   to
+      if (hi <= lo + M) { Insertion.sort(a, lo, hi); return; }      
+     The optimum value of the cutoff M is system-dependent, but any value between
+     5 and 15 is likely to work well in most situations. 
+     
+     
+     
+     
+     
+     
+     
+  
      
    
