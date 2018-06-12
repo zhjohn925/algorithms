@@ -1,4 +1,4 @@
-//Compile and run java
+//Compile java and run java
 $ javac -d . In.java
 $ javac -d . StdOut.java 
 $ javac -d . Stopwatch.java
@@ -40,3 +40,4 @@ Effective Programming Reference:
 (Book) Effective C++ by Meyers
 
 (Book) Effective Java by Bloch
+
