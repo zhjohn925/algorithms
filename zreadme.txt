@@ -11,7 +11,11 @@ $ java -cp . edu/princeton/cs/algs4/ThreeSum 1Kints.txt
 $ copyAlgs4  ThreeSum.java 
 
 //Download a file on Max terminal:
+//https://introcs.cs.princeton.edu/java/data/
 $ curl -O https://algs4.cs.princeton.edu/14analysis/1Kints.txt
+$ curl -O https://introcs.cs.princeton.edu/java/data/tale.txt
+$ curl -O https://introcs.cs.princeton.edu/java/data/leipzig/leipzig1m.txt
+$ curl -O https://algs4.cs.princeton.edu/13stacks/tobe.txt  
 
 //Cracking the coding interview
 //  by Gayle Laakmann McDowell
